@@ -1,23 +1,23 @@
-import 'package:counter_bloc/cubit/counter_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({
-    Key? key,
-  }) : super(key: key);
+import '../../logic/cubit/counter_cubit.dart';
+
+class SecendScreen extends StatefulWidget {
+  const SecendScreen({super.key});
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<SecendScreen> createState() => _SecendScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _SecendScreenState extends State<SecendScreen> {
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.amber,
             centerTitle: true,
             title: const Text("Counter BLoC"),
           ),
@@ -28,8 +28,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 const Text(
                   'You have pushed the button this many times:',
                 ),
-                BlocBuilder<CounterCubit, CounterState>(
-                  builder: (context, state){
+                BlocConsumer<CounterCubit, CounterState>(
+                  listener: (context, state) {
+            if (state.wasIncremented == true) {
+              ScaffoldMessenger.of(context).showSnackBar(
+              const  SnackBar(
+                  content: Text("Incremented!"),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            } if(state.wasIncremented == false) {
+              ScaffoldMessenger.of(context).showSnackBar(
+              const  SnackBar(
+                  content: Text("Decremented!"),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            }
+          },
+                  builder: (context, state) {
                     if (state.counterValue < 0) {
                       return Text(
                         "BRR NEGATIVE${state.counterValue}",
@@ -45,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         "HMM NUMBERN 5",
                         style: Theme.of(context).textTheme.headline4,
                       );
-                    } else 
+                    } else
                       return Text(
                         state.counterValue.toString(),
                         style: Theme.of(context).textTheme.headline4,
@@ -75,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           size: 35,
                         ))
                   ],
-                )
+                ),
               ],
             ),
           ),

@@ -1,25 +1,32 @@
-import 'package:counter_bloc/cubit/counter_cubit.dart';
+import 'package:counter_bloc/logic/cubit/counter_cubit.dart';
+import 'package:counter_bloc/presentation/screen/router/app_router.dart';
+// import 'package:counter_bloc/presentation/screen/secend_screen.dart';
+// import 'package:counter_bloc/presentation/screen/third_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'cubit/counter_cubit.dart';
-
-import 'screen/dashboard.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'logic/cubit/counter_cubit.dart';
+// import 'presentation/screen/dashboard.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+   MyApp({super.key});
+  final AppRout _appRout = AppRout();
   @override
   Widget build(BuildContext context) {
     return BlocProvider<CounterCubit>(
-      create: (context) => CounterCubit(),
-      child:const MaterialApp(
+      create: (_)=>CounterCubit(),
+      child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: MyHomePage()
+        onGenerateRoute: _appRout.onGenerateRoute,
       ),
     );
+    
   }
+
 }
+
 
